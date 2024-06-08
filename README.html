@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentación Técnica: Aplicación Task-Manager</title>
+</head>
+<body>
+<h1>Documentación Técnica: Aplicación Task-Manager</h1>
+
+<h2>Requisitos Previos</h2>
+<p>Para configurar y ejecutar la aplicación Task-Manager, asegúrate de tener instalados los siguientes elementos en tu máquina:</p>
+<ul>
+<li>Docker (v26.0)</li>
+<li>Docker Compose (v2.1)</li>
+</ul>
+
+<h2>Pasos para Levantar la Aplicación</h2>
+<ol>
+<li><strong>Cargar las Imágenes Docker:</strong></li>
+<p>Antes de levantar la aplicación, carga las imágenes Docker utilizando el siguiente comando:</p>
+<pre><code>docker load -i task-manager.tar
+</code></pre>
+
+<li><strong>Ejecutar Docker Compose:</strong></li>
+<p>En el directorio donde se encuentra el archivo <code>docker-compose.yml</code>, ejecuta el siguiente comando:</p>
+<pre><code>docker-compose up -d
+</code></pre>
+<p>Este comando levantará la aplicación en modo daemon, lo que significa que seguirá ejecutándose en segundo plano.</p>
+</ol>
+
+<h2>Acceso a la API</h2>
+<p>Una vez que la aplicación esté levantada, podrás acceder a la API. Para obtener más información sobre cómo interactuar con la API, consulta la documentación Swagger en el archivo <code>task-manager-api.yml</code>.</p>
+
+<h2>Ejemplos de Uso de la API con cURL</h2>
+<p>A continuación, se presentan algunos ejemplos de cómo utilizar la API utilizando el comando cURL:</p>
+<ol>
+<li><strong>Obtener Todas las Tareas (getAll):</strong></li>
+<pre><code>curl 'http://localhost:8080/tasks'
+</code></pre>
+
+<li><strong>Obtener una Tarea por su ID (getById):</strong></li>
+<pre><code>curl 'http://localhost:8080/tasks/{id}'
+</code></pre>
+
+<li><strong>Crear una Nueva Tarea (Create task):</strong></li>
+<pre><code>curl -X POST http://localhost:8080/tasks \
+     -H "Content-Type: application/json" \
+     -d '{
+           "title": "Nueva Tarea 1",
+           "description": "Descripción de la nueva tarea",
+           "dueDate": "2024-06-30",
+           "tags": ["etiqueta1", "etiqueta2"]
+         }'
+</code></pre>
+
+<li><strong>Actualizar una Tarea (updateTask):</strong></li>
+<pre><code>curl -X PUT http://localhost:8080/tasks/6664448e558e274bc38d4688 \
+     -H "Content-Type: application/json" \
+     -d '{
+           "title": "Tarea Actualizada",
+           "description": "Descripción actualizada",
+           "dueDate": "2024-06-30",
+           "tags": ["etiqueta1", "etiqueta2"],
+           "status": "COMPLETED"
+         }'
+</code></pre>
+
+<li><strong>Eliminar una Tarea por su ID (deleteById):</strong></li>
+<pre><code>curl -X DELETE http://localhost:8080/tasks/{id}
+</code></pre>
+</ol>
+<p>Recuerda reemplazar <code>{id}</code> con el ID correspondiente de la tarea que deseas obtener, actualizar o eliminar.</p>
+
+</body>
+</html>
